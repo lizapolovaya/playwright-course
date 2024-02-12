@@ -6,6 +6,7 @@ import { Checkout } from "./../page-objects/Checkout.js"
 import { LoginPage } from "./../page-objects/LoginPage.js"
 import { RegisterPage } from "./../page-objects/RegisterPage.js"
 import { DeliveryDetails } from "./../page-objects/DeliveryDetails.js"
+import { deliveryDetails as userAddress} from "./../data/deliveryDetails.js"
 
 
 test.only("New user full end-to-end test journey", async ({ page }) => {
@@ -36,13 +37,9 @@ test.only("New user full end-to-end test journey", async ({ page }) => {
     await registerPage.signUpAsNewUser(email, password)
 
     const deliveryDetails = new DeliveryDetails(page)
-    const firstName = "Bruce"
-    const lastName = "Willis"
-    const street = "Tsum"
-    const postcode = 47017
-    const city = "Dnipro"
-
-    await deliveryDetails.fillDetails()
+    await deliveryDetails.fillDetails(userAddress)
+    await deliveryDetails.saveDetails()
+    
 
 
 })
