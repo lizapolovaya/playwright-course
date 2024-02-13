@@ -17,6 +17,13 @@ export class DeliveryDetails {
         this.countryDropdown = page.locator('[data-qa="country-dropdown"]')
         this.saveAddressButton = page.locator('[data-qa="save-address-button"]')
         this.savedAddressContainer = page.locator('[data-qa="saved-address-container"]')
+        this.savedAddressFirstName = page.locator('[data-qa="saved-address-firstName"]')
+        this.savedAddressLastName = page.locator('[data-qa="saved-address-lastName"]')
+        this.savedAddressStreet = page.locator('[data-qa="saved-address-street"]') 
+        this.savedAddressPostcode = page.locator('[data-qa="saved-address-postcode"]')
+        this.savedAddressCity = page.locator('[data-qa="saved-address-city"]') 
+        this.savedAddressCountry = page.locator('[data-qa="saved-address-country"]')
+        this.continueToPaymentButton = page.locator('[data-qa="continue-to-payment-button"]')
     }
 
     async fillDetails(userAddress) {
@@ -33,8 +40,34 @@ export class DeliveryDetails {
         await this.saveAddressButton.waitFor()
         await this.saveAddressButton.click()
         await expect(this.savedAddressContainer).toHaveCount(addressCountBeforeSaving + 1)
+        
+        await this.savedAddressFirstName.first().waitFor()
+        expect(await this.savedAddressFirstName.first().innerText()).toBe(await this.firstNameInput.inputValue())
+        
+        await this.savedAddressLastName.first().waitFor()
+        expect(await this.savedAddressLastName.first().innerText()).toBe(await this.lastNameInput.inputValue())
 
+        await this.savedAddressStreet.first().waitFor()
+        expect(await this.savedAddressStreet.first().innerText()).toBe(await this.streetInput.inputValue())
+
+        await this.savedAddressPostcode.first().waitFor()
+        expect(await this.savedAddressPostcode.first().innerText()).toBe(await this.postcodeInput.inputValue())
+        
+        await this.savedAddressCity.first().waitFor()
+        expect(await this.savedAddressCity.first().innerText()).toBe(await this.cityInput.inputValue())
+
+        await this.savedAddressCountry.first().waitFor()
+        expect(await this.savedAddressCountry.first().innerText()).toBe(await this.countryDropdown.inputValue())
+        
         //await this.page.pause()
+
+    }
+
+    async continueToPayment() {
+          await this.continueToPaymentButton.waitFor()
+          await this.continueToPaymentButton.click()
+          await this.page.waitForURL(/\/payment/, { timeout: 3000 })
+          //await this.page.pause()
 
     }
 }
