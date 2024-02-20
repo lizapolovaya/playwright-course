@@ -9,6 +9,7 @@ export class MyAccountPage {
         this.page = page
 
         this.pageHeading = page.getByRole('heading', {name:'My Account'})
+        this.errorMessage = page.getByText('PLAYWRIGHT ERROR FOR MOCKING') 
     }
 
     async visit() {
@@ -19,4 +20,9 @@ export class MyAccountPage {
     async waitForPageHeading() {
         await this.pageHeading.waitFor()
     }
+
+    async waitForErrorMessage() {
+        await this.errorMessage.waitFor()
+    }
+    
 }

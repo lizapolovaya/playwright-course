@@ -19,13 +19,12 @@ test.only("My account using cookie injection and mocking network request", async
 
     const myAccount = new MyAccountPage(page)
     await myAccount.visit()
-    await page.pause()
 
     await page.evaluate(([loginTokenInsideBrowserCode]) => {
         document.cookie = "token=" + loginTokenInsideBrowserCode
     }, [loginToken])
     await myAccount.visit()
     await myAccount.waitForPageHeading()
-    await page.pause()
+    await myAccount.waitForErrorMessage()
 
 })
